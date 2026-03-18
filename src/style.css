@@ -3,41 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --text-black: #000000;
-  --text-dark: #111111;
-  --text-secondary: #222222;
-  --text-tertiary: #444444;
+  --orange: #FF5C00;
   --bg-white: #ffffff;
-  --bg-soft: #fafafa;
-  --border-light: #e0e0e0;
-  --border-medium: #888888;
-  --grid-color: rgba(0, 0, 0, 0.08);
+  --bg-soft: #F8F9FA;
+  --border-light: #F0F0F0;
+  --text-gray: #6C757D;
 }
 
 @layer base {
   body {
     @apply bg-white text-black antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   }
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-black tracking-tighter text-black;
-    font-family: 'Montserrat', sans-serif;
-  }
-}
-
-.grid-bg {
-  background-image: 
-    linear-gradient(var(--grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-  background-size: 30px 30px;
 }
 
 .bento-card {
-  @apply bg-white border border-opacity-100 transition-all duration-300;
-  border-color: var(--border-light);
+  @apply bg-white border border-brand-border rounded-[40px] shadow-xl transition-all duration-500;
 }
 
 .bento-card:hover {
-  @apply shadow-2xl;
-  border-color: var(--border-medium);
+  @apply -translate-y-2 shadow-hyper-premium;
+}
+
+.btn-black {
+  @apply bg-black text-white px-8 py-4 rounded-full font-bold transition-all hover:bg-neutral-800 active:scale-95;
+}
+
+.btn-outline {
+  @apply border border-brand-border text-black px-8 py-4 rounded-full font-bold transition-all hover:bg-neutral-50 active:scale-95;
 }
