@@ -1,0 +1,16 @@
+# Dependency directories
+node_modules/
+frontend/node_modules/
+
+# Build artifacts
+dist/
+frontend/dist/
+build/
+.vercel/
+
+# Environment variables
+.env
+.env.*
+
+# Git
+.git/
