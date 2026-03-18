@@ -1,16 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "app.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "dist" }
-    }
-  ],
   "rewrites": [
     {
       "source": "/api/(.*)",
@@ -18,11 +7,12 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/frontend/$1"
+      "destination": "/frontend/dist/$1"
     }
   ],
   "env": {
     "NODE_VERSION": "20.x",
-    "VERCEL": "1"
+    "VERCEL": "1",
+    "PYTHON_VERSION": "3.12"
   }
 }
