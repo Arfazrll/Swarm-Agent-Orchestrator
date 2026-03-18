@@ -1,6 +1,6 @@
 import os
 import json
-from core.agents import run_pydantic_ai_pipeline
+from api.core.agents import run_pydantic_ai_pipeline
 
 # Global state for Flask (backward compatibility)
 latest_result = {

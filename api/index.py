@@ -4,10 +4,11 @@ import threading
 from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask, send_from_directory, request, jsonify, send_file
-from core.swarm_logic import run_swarm_backend, latest_result
-from core.pdf_generator import generate_pdf
+# IMPORTANT: Adjusting imports for the new api/ structure
+from api.core.swarm_logic import run_swarm_backend, latest_result
+from api.core.pdf_generator import generate_pdf
 
-app = Flask(__name__, static_folder='frontend/dist')
+app = Flask(__name__, static_folder='../frontend/dist')
 
 # Directory for generated files
 # ON VERCEL: Use /tmp (the only writable directory)
@@ -20,7 +21,7 @@ if not os.path.exists(OUTPUT_DIR):
 # Store job status
 jobs = {}
 
-# Serve Vue App
+# Serve Vue App (Fallback for local dev)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
@@ -52,7 +53,7 @@ def run_swarm():
     def background_task(tid, t_topic):
         try:
             # Sync with the new backend logic
-            from core.swarm_logic import latest_result as lr
+            from api.core.swarm_logic import latest_result as lr
             lr["logs"] = []
             lr["status"] = "running"
             
@@ -88,7 +89,7 @@ def get_status(job_id):
         return jsonify({"error": "Job not found"}), 404
     
     # Sync logs from global logic state if the job is still running
-    from core.swarm_logic import latest_result as lr
+    from api.core.swarm_logic import latest_result as lr
     if jobs[job_id]["status"] == "running":
         jobs[job_id]["logs"] = lr["logs"][:]
         
