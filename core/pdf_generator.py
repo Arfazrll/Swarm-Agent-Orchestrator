@@ -23,6 +23,12 @@ def sanitize_text(text):
     except:
         return text.encode('ascii', 'ignore').decode('ascii')
 
+def strip_markdown(text):
+    """Strip markdown bold/italic markers from text for clean PDF output."""
+    if not text:
+        return ""
+    return re.sub(r'[\*_]{1,2}(.*?)[\*_]{1,2}', r'\1', text)
+
 class PDF(FPDF):
     def header(self):
         if self.page_no() > 1:
@@ -60,7 +66,7 @@ def generate_pdf(markdown_content, output_path, title="Blog Post"):
         
         pdf.set_font("Helvetica", "B", 26)
         pdf.set_text_color(20, 20, 20)
-        pdf.multi_cell(effective_width, 18, sanitize_text(title), align='C')
+        pdf.multi_cell(effective_width, 18, strip_markdown(sanitize_text(title)), align='C')
         pdf.set_draw_color(100, 100, 100)
         pdf.line(pdf.l_margin, pdf.get_y() + 5, pdf.w - pdf.r_margin, pdf.get_y() + 5)
         pdf.ln(15)
@@ -80,19 +86,19 @@ def generate_pdf(markdown_content, output_path, title="Blog Post"):
             if text.startswith('###'):
                 pdf.set_font("Helvetica", "B", 13)
                 pdf.set_text_color(60, 60, 60)
-                pdf.multi_cell(effective_width, 9, clean_text.replace('###', '').strip())
+                pdf.multi_cell(effective_width, 9, strip_markdown(clean_text).replace('###', '').strip())
                 pdf.ln(2)
             elif text.startswith('##'):
                 pdf.ln(5)
                 pdf.set_font("Helvetica", "B", 16)
                 pdf.set_text_color(40, 40, 40)
-                pdf.multi_cell(effective_width, 11, clean_text.replace('##', '').strip())
+                pdf.multi_cell(effective_width, 11, strip_markdown(clean_text).replace('##', '').strip())
                 pdf.ln(3)
             elif text.startswith('#'):
                 pdf.ln(5)
                 pdf.set_font("Helvetica", "B", 20)
                 pdf.set_text_color(20, 20, 20)
-                pdf.multi_cell(effective_width, 14, clean_text.replace('#', '').strip())
+                pdf.multi_cell(effective_width, 14, strip_markdown(clean_text).replace('#', '').strip())
                 pdf.ln(4)
             elif re.match(r'^(\d+\.|\-|\*)\s', text):
                 pdf.set_font("Helvetica", "", 11)
@@ -100,12 +106,11 @@ def generate_pdf(markdown_content, output_path, title="Blog Post"):
                 pdf.set_x(pdf.l_margin + 5)
                 prefix = "o " if text.startswith(('-', '*')) else ""
                 content = text if not prefix else prefix + text[2:]
-                pdf.multi_cell(effective_width - 5, 8, sanitize_text(content))
+                pdf.multi_cell(effective_width - 5, 8, strip_markdown(sanitize_text(content)))
             else:
                 pdf.set_font("Helvetica", "", 11)
                 pdf.set_text_color(30, 30, 30)
-                content = re.sub(r'[\*_]{1,2}(.*?)[\*_]{1,2}', r'\1', clean_text)
-                pdf.multi_cell(effective_width, 7, content)
+                pdf.multi_cell(effective_width, 7, strip_markdown(clean_text))
         
         pdf.output(output_path)
         return True
