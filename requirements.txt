@@ -1,7 +1,6 @@
 flask
 openai
-swarm
 python-dotenv
 fpdf2
-markdown2
-xhtml2pdf
+pydantic
+pydantic-ai
