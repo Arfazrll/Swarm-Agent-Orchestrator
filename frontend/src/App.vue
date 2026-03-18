@@ -29,7 +29,7 @@ import {
 
 gsap.registerPlugin(ScrollTrigger)
 
-// State
+
 const topic = ref('')
 const isLoading = ref(false)
 const jobId = ref<string | null>(null)
