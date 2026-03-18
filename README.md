@@ -1,4 +1,4 @@
-# Swarm AI Blog Writer 🚀
+# Swarm Agent Blog Writer 🚀
 
 A premium, multi-agent blog generation engine powered by **Swarm Intelligence** and **Groq (Llama 3.3 70B)**. This application orchestrates multiple specialized AI agents to create long-form, research-backed blog posts (800-1200 words) exported directly to professional PDF reports.
 
