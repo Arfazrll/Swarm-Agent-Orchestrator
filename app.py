@@ -10,7 +10,10 @@ from core.pdf_generator import generate_pdf
 app = Flask(__name__, static_folder='frontend/dist')
 
 # Directory for generated files
-OUTPUT_DIR = "generated_docs"
+# ON VERCEL: Use /tmp (the only writable directory)
+IS_VERCEL = os.environ.get("VERCEL") == "1"
+OUTPUT_DIR = "/tmp/generated_docs" if IS_VERCEL else "generated_docs"
+
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
@@ -24,12 +27,11 @@ def serve(path):
     if path != "" and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
     else:
-        # If the built Vue app is not available, provide a helpful message
-        # In a real build pipeline, this would return frontend/dist/index.html
+        # On Vercel: The static layer handles routing. This is a fallback for local.
         vue_index = os.path.join(app.static_folder, 'index.html')
         if os.path.exists(vue_index):
             return send_from_directory(app.static_folder, 'index.html')
-        return "Vue app not built. Run 'npm run build' in frontend/ to serve the UI.", 503
+        return "Backend API is active.", 200
 
 @app.route("/api/run", methods=["POST"])
 def run_swarm():
