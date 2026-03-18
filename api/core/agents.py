@@ -3,7 +3,7 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 from openai import OpenAI
-from core.models import BlogSection, BlogPlan, FinalBlog
+from api.core.models import BlogSection, BlogPlan, FinalBlog
 from typing import Type, TypeVar, Any
 from pydantic import BaseModel
 

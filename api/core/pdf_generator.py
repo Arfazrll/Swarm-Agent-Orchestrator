@@ -117,6 +117,3 @@ def generate_pdf(markdown_content, output_path, title="Blog Post"):
     except Exception as e:
         print(f"Error in PDF generation: {e}")
         return False
-
-if __name__ == "__main__":
-    generate_pdf("# Test Title\nThis is a *test* content.", "test.pdf", "My Test Title")

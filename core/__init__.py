@@ -1,1 +1,0 @@
-# Swarm Core Package
