@@ -6,6 +6,6 @@
     "frontend"
   ],
   "scripts": {
-    "build": "npm run build --workspace=frontend"
+    "build": "cd frontend && npx vite build"
   }
 }
