@@ -3,4 +3,4 @@ openai
 python-dotenv
 fpdf2
 pydantic
-pydantic-ai
+pydantic
