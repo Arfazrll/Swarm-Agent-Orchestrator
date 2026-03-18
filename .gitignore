@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+
+# Environment Variables
+.env
+.flaskenv
+
+# Project specific
+generated_docs/
+*.md
+!README.md
+!task.md
+!implementation_plan.md
+!walkthrough.md
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
