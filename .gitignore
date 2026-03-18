@@ -2,43 +2,29 @@
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
-env/
-build/
-develop/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environment
 venv/
-ENV/
-
-# Environment Variables
 .env
-.flaskenv
 
-# Project specific
+# Project
 generated_docs/
-*.md
-!README.md
-!task.md
-!implementation_plan.md
-!walkthrough.md
+*.pdf
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.vscode/
 
 # IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
+
+node_modules/
+.node_modules
+node_modules
+.node_modules/

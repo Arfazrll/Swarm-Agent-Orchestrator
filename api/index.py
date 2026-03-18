@@ -1,19 +1,31 @@
 import os
+import sys
 import uuid
 import threading
 from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask, send_from_directory, request, jsonify, send_file
-# IMPORTANT: Adjusting imports for the new api/ structure
-from api.core.swarm_logic import run_swarm_backend, latest_result
-from api.core.pdf_generator import generate_pdf
 
-app = Flask(__name__, static_folder='../frontend/dist')
+# --- CROSS-PLATFORM IMPORT STRATEGY ---
+# Support both Vercel (where root is in path) and Local (where api/ is current)
+api_dir = os.path.dirname(os.path.abspath(__file__))
+root_dir = os.path.abspath(os.path.join(api_dir, '..'))
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
+try:
+    from api.core.swarm_logic import run_swarm_backend, latest_result
+    from api.core.pdf_generator import generate_pdf
+except ImportError:
+    # Fallback for old style or non-prefixed local imports
+    from core.swarm_logic import run_swarm_backend, latest_result
+    from core.pdf_generator import generate_pdf
+
+app = Flask(__name__, static_folder='../dist')
 
 # Directory for generated files
-# ON VERCEL: Use /tmp (the only writable directory)
 IS_VERCEL = os.environ.get("VERCEL") == "1"
-OUTPUT_DIR = "/tmp/generated_docs" if IS_VERCEL else "generated_docs"
+OUTPUT_DIR = "/tmp/generated_docs" if IS_VERCEL else os.path.join(root_dir, "generated_docs")
 
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
@@ -21,14 +33,13 @@ if not os.path.exists(OUTPUT_DIR):
 # Store job status
 jobs = {}
 
-# Serve Vue App (Fallback for local dev)
+# Serve Vue App (Vercel uses its own static layer, this is for local)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):
     if path != "" and os.path.exists(app.static_folder + '/' + path):
         return send_from_directory(app.static_folder, path)
     else:
-        # On Vercel: The static layer handles routing. This is a fallback for local.
         vue_index = os.path.join(app.static_folder, 'index.html')
         if os.path.exists(vue_index):
             return send_from_directory(app.static_folder, 'index.html')
@@ -52,7 +63,6 @@ def run_swarm():
     
     def background_task(tid, t_topic):
         try:
-            # Sync with the new backend logic
             from api.core.swarm_logic import latest_result as lr
             lr["logs"] = []
             lr["status"] = "running"
@@ -88,7 +98,6 @@ def get_status(job_id):
     if job_id not in jobs:
         return jsonify({"error": "Job not found"}), 404
     
-    # Sync logs from global logic state if the job is still running
     from api.core.swarm_logic import latest_result as lr
     if jobs[job_id]["status"] == "running":
         jobs[job_id]["logs"] = lr["logs"][:]
