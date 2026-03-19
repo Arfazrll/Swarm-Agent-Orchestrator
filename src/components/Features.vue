@@ -3,19 +3,20 @@ import { Cpu, Search, ShieldCheck, Database } from 'lucide-vue-next';
 </script>
 
 <template>
-  <section class="py-32 px-4 max-w-7xl mx-auto relative overflow-hidden">
-    <div class="text-center mb-20">
-      <h2 class="text-4xl md:text-6xl font-black mb-6 tracking-tight">Built for Reliability.</h2>
-      <p class="text-lg text-neutral-500 max-w-2xl mx-auto font-medium leading-relaxed">
+  <section id="technology" class="py-32 px-4 max-w-7xl mx-auto relative overflow-hidden">
+    <div class="scroll-reveal text-center mb-20">
+      <p class="text-[10px] font-black uppercase tracking-[0.3em] text-brand-orange mb-3">Technology</p>
+      <h2 class="text-4xl md:text-6xl font-black mb-4 tracking-tighter">Built for Reliability.</h2>
+      <p class="text-base text-black/40 max-w-xl mx-auto font-medium leading-relaxed">
         Enterprise-grade infrastructure ensuring every draft is accurate, validated, and secure.
       </p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
       <!-- Pydantic Validation Card -->
-      <div class="md:col-span-8 bento-card p-12 flex flex-col justify-between overflow-hidden relative group">
+      <div class="scroll-reveal-stagger md:col-span-8 bento-card p-12 flex flex-col justify-between overflow-hidden relative group">
         <div>
-          <Database class="w-8 h-8 mb-10 text-neutral-300" />
+        <Database class="w-8 h-8 mb-10 text-black/15 group-hover:text-brand-orange transition-colors duration-500" />
           <h3 class="text-3xl font-bold mb-4">Pydantic Validation</h3>
           <p class="text-neutral-500 text-lg max-w-sm font-medium leading-relaxed">
             Every section, fact, and draft is validated against strict Pydantic schemas, ensuring 100% data integrity.
@@ -37,7 +38,7 @@ class Blog(BaseModel):
       </div>
 
       <!-- Groq Card -->
-      <div class="md:col-span-4 bento-card !bg-black p-12 text-white flex flex-col justify-between group overflow-hidden !shadow-hyper-premium border-none">
+      <div class="scroll-reveal-stagger md:col-span-4 bento-card !bg-black p-12 text-white flex flex-col justify-between group overflow-hidden !shadow-hyper-premium border-none">
         <Cpu class="w-8 h-8 mb-10 text-brand-orange" />
         <div>
           <h3 class="text-3xl font-bold mb-4">Groq 70B Engine</h3>
@@ -48,8 +49,8 @@ class Blog(BaseModel):
       </div>
 
       <!-- Deep Research Card -->
-      <div class="md:col-span-4 bento-card p-12 group flex flex-col justify-between">
-        <Search class="w-8 h-8 mb-10 text-neutral-300" />
+      <div class="scroll-reveal-stagger md:col-span-4 bento-card p-12 group flex flex-col justify-between">
+        <Search class="w-8 h-8 mb-10 text-black/15 group-hover:text-brand-orange transition-colors duration-500" />
         <div>
           <h3 class="text-3xl font-bold mb-4">Deep Research</h3>
           <p class="text-neutral-500 text-lg font-medium leading-relaxed">
@@ -59,8 +60,8 @@ class Blog(BaseModel):
       </div>
 
       <!-- Production Ready Card -->
-      <div class="md:col-span-8 bento-card p-12 flex flex-col justify-between">
-        <ShieldCheck class="w-8 h-8 mb-10 text-neutral-300" />
+      <div class="scroll-reveal-stagger md:col-span-8 bento-card p-12 flex flex-col justify-between group">
+        <ShieldCheck class="w-8 h-8 mb-10 text-black/15 group-hover:text-brand-orange transition-colors duration-500" />
         <div>
           <h3 class="text-3xl font-bold mb-4">Production Ready</h3>
           <p class="text-neutral-500 text-lg font-medium leading-relaxed">

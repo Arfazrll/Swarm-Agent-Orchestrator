@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { 
   Rocket, 
   Terminal, 
@@ -18,6 +18,9 @@ import {
 } from 'lucide-vue-next';
 import axios from 'axios';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 // New Components
 import Navbar from './components/Navbar.vue';
@@ -112,6 +115,7 @@ const scrollToWorkspace = () => {
 };
 
 onMounted(() => {
+  // 1. Hero entrance animation
   gsap.from(".hero-content > *", {
     y: 30,
     opacity: 0,
@@ -119,11 +123,66 @@ onMounted(() => {
     stagger: 0.2,
     ease: "power4.out"
   });
+
+  // 2. SCROLL EFFECT: Scroll Reveal — fade+slide up on enter viewport
+  gsap.utils.toArray<Element>('.scroll-reveal').forEach((el) => {
+    gsap.fromTo(el, 
+      { y: 50, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          end: 'top 20%',
+          toggleActions: 'play none none reverse',
+        }
+      }
+    );
+  });
+
+  // 3. SCROLL EFFECT: Stagger Reveal — agent/feature cards stagger in
+  const staggerGroups = document.querySelectorAll('.scroll-reveal-stagger');
+  if (staggerGroups.length > 0) {
+    gsap.fromTo(staggerGroups,
+      { y: 60, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        stagger: 0.12,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: staggerGroups[0],
+          start: 'top 85%',
+          toggleActions: 'play none none reverse',
+        }
+      }
+    );
+  }
+
+  // 4. SCROLL EFFECT: Parallax — hero section drifts subtly upward as you scroll
+  gsap.to('.hero-section', {
+    y: -80,
+    ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero-section',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1.5,
+    }
+  });
+});
+
+onUnmounted(() => {
+  ScrollTrigger.getAll().forEach(t => t.kill());
 });
 </script>
 
 <template>
-  <div class="min-h-screen bg-white relative overflow-hidden font-plus selection:bg-brand-orange selection:text-white">
+  <div class="min-h-screen bg-white relative font-plus selection:bg-brand-orange selection:text-white">
     <Navbar />
 
     <main class="relative z-10">
@@ -236,17 +295,6 @@ onMounted(() => {
 
 @keyframes slideUp {
   from { transform: translateY(30px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-</style>
-
-<style scoped>
-.success-state {
-  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 </style>
