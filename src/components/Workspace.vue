@@ -21,7 +21,6 @@ const onInput = (e: Event) => {
       <p class="text-black/40 font-bold text-base">Initialize the swarm with your directive.</p>
     </div>
 
-    <!-- Input Container: clear border + strong shadow -->
     <div
       id="workspace-anchor"
       class="scroll-reveal relative max-w-3xl mx-auto group px-2 md:px-0"

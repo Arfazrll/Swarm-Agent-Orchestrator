@@ -33,7 +33,6 @@
   @apply border border-brand-border text-black px-8 py-4 rounded-full font-bold transition-all hover:bg-neutral-50 active:scale-95;
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar,
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
@@ -73,7 +72,7 @@ body::-webkit-scrollbar {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #222 !important; /* Dark charcoal thumb on black track */
+  background: #222 !important; 
   border: 2px solid #000 !important;
   border-radius: 0px !important;
 }
@@ -82,7 +81,6 @@ body::-webkit-scrollbar {
   background: #333 !important;
 }
 
-/* Firefox */
 * {
   scrollbar-width: auto !important;
   scrollbar-color: black white !important;

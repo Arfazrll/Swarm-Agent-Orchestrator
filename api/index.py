@@ -6,8 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 from flask import Flask, send_from_directory, request, jsonify, send_file
 
-# --- CROSS-PLATFORM IMPORT STRATEGY ---
-# Support both Vercel (where root is in path) and Local (where api/ is current)
 api_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.abspath(os.path.join(api_dir, '..'))
 if root_dir not in sys.path:
@@ -17,23 +15,19 @@ try:
     from api.core.swarm_logic import run_swarm_backend, latest_result
     from api.core.pdf_generator import generate_pdf
 except ImportError:
-    # Fallback for old style or non-prefixed local imports
     from core.swarm_logic import run_swarm_backend, latest_result
     from core.pdf_generator import generate_pdf
 
 app = Flask(__name__, static_folder='../dist')
 
-# Directory for generated files
 IS_VERCEL = os.environ.get("VERCEL") == "1"
 OUTPUT_DIR = "/tmp/generated_docs" if IS_VERCEL else os.path.join(root_dir, "generated_docs")
 
 if not os.path.exists(OUTPUT_DIR):
     os.makedirs(OUTPUT_DIR)
 
-# Store job status
 jobs = {}
 
-# Serve Vue App (Vercel uses its own static layer, this is for local)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def serve(path):

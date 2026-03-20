@@ -13,7 +13,6 @@ import { Cpu, Search, ShieldCheck, Database } from 'lucide-vue-next';
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-      <!-- Pydantic Validation Card -->
       <div class="scroll-reveal-stagger md:col-span-8 bento-card p-12 flex flex-col justify-between overflow-hidden relative group">
         <div>
         <Database class="w-8 h-8 mb-10 text-black/15 group-hover:text-brand-orange transition-colors duration-500" />
@@ -23,7 +22,6 @@ import { Cpu, Search, ShieldCheck, Database } from 'lucide-vue-next';
           </p>
         </div>
         
-        <!-- Code snippet visual (STRICT SCHEMA V2) -->
         <div class="absolute right-8 top-1/2 -translate-y-1/2 bg-neutral-50 border border-brand-border p-6 rounded-3xl w-72 shadow-sm transform group-hover:scale-105 transition-transform duration-500">
           <div class="flex items-center gap-2 mb-4">
             <div class="w-2.5 h-2.5 rounded-full bg-green-500"></div>
@@ -37,7 +35,6 @@ class Blog(BaseModel):
         </div>
       </div>
 
-      <!-- Groq Card -->
       <div class="scroll-reveal-stagger md:col-span-4 bento-card !bg-black p-12 text-white flex flex-col justify-between group overflow-hidden !shadow-hyper-premium border-none">
         <Cpu class="w-8 h-8 mb-10 text-brand-orange" />
         <div>
@@ -48,7 +45,6 @@ class Blog(BaseModel):
         </div>
       </div>
 
-      <!-- Deep Research Card -->
       <div class="scroll-reveal-stagger md:col-span-4 bento-card p-12 group flex flex-col justify-between">
         <Search class="w-8 h-8 mb-10 text-black/15 group-hover:text-brand-orange transition-colors duration-500" />
         <div>
@@ -59,7 +55,6 @@ class Blog(BaseModel):
         </div>
       </div>
 
-      <!-- Production Ready Card -->
       <div class="scroll-reveal-stagger md:col-span-8 bento-card p-12 flex flex-col justify-between group">
         <ShieldCheck class="w-8 h-8 mb-10 text-black/15 group-hover:text-brand-orange transition-colors duration-500" />
         <div>

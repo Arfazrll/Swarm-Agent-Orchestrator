@@ -2,7 +2,6 @@ import os
 import json
 from api.core.agents import run_pydantic_ai_pipeline
 
-# Global state for Flask (backward compatibility)
 latest_result = {
     "status": "idle",
     "logs": [],
@@ -23,7 +22,6 @@ def run_swarm_backend(topic):
     latest_result["logs"] = [f"Starting generation for topic: {topic}"]
     
     try:
-        # Run the structured pipeline
         blog = run_pydantic_ai_pipeline(topic)
         
         latest_result["title"] = blog.title
