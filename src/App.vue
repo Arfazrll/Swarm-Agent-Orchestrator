@@ -22,7 +22,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// New Components
 import Navbar from './components/Navbar.vue';
 import Hero from './components/Hero.vue';
 import Features from './components/Features.vue';
@@ -53,7 +52,6 @@ const startGeneration = async () => {
   pdfUrl.value = null;
   currentStep.value = 0;
 
-  // Scroll to workspace/logs area
   const el = document.getElementById('workspace-anchor');
   if (el) el.scrollIntoView({ behavior: 'smooth' });
 
@@ -62,7 +60,6 @@ const startGeneration = async () => {
     const jobId = res.data.job_id;
     pollStatus(jobId);
     
-    // Simulate step progress
     const stepInterval = setInterval(() => {
       if (currentStep.value < 4) {
         currentStep.value++;
@@ -115,7 +112,6 @@ const scrollToWorkspace = () => {
 };
 
 onMounted(() => {
-  // 1. Hero entrance animation
   gsap.from(".hero-content > *", {
     y: 30,
     opacity: 0,
@@ -124,7 +120,6 @@ onMounted(() => {
     ease: "power4.out"
   });
 
-  // 2. SCROLL EFFECT: Scroll Reveal — fade+slide up on enter viewport
   gsap.utils.toArray<Element>('.scroll-reveal').forEach((el) => {
     gsap.fromTo(el, 
       { y: 50, opacity: 0 },
@@ -143,7 +138,6 @@ onMounted(() => {
     );
   });
 
-  // 3. SCROLL EFFECT: Stagger Reveal — agent/feature cards stagger in
   const staggerGroups = document.querySelectorAll('.scroll-reveal-stagger');
   if (staggerGroups.length > 0) {
     gsap.fromTo(staggerGroups,
@@ -163,7 +157,6 @@ onMounted(() => {
     );
   }
 
-  // 4. SCROLL EFFECT: Parallax — hero section drifts subtly upward as you scroll
   gsap.to('.hero-section', {
     y: -80,
     ease: 'none',
@@ -186,24 +179,17 @@ onUnmounted(() => {
     <Navbar />
 
     <main class="relative z-10">
-      <!-- Section 1: Hero -->
       <Hero @start="scrollToWorkspace" />
 
-      <!-- Section 2: Features -->
       <Features />
-
-      <!-- Section 3: Agent Swarm -->
       <AgentSwarm />
 
-      <!-- Section 4: Workspace & Generation -->
       <div id="workspace-anchor" class="scroll-mt-32">
         <Workspace v-model="topic" :loading="jobStatus === 'running'" @submit="startGeneration" />
       </div>
 
-      <!-- Live Generation Status Panel -->
       <section v-if="jobStatus !== 'idle'" class="max-w-7xl mx-auto px-4 pb-32">
         <div class="bento-card p-10 relative overflow-hidden bg-white/80 backdrop-blur-md">
-          <!-- Progress Steps -->
           <div class="flex justify-between items-center mb-16 relative z-10 max-w-4xl mx-auto">
             <div v-for="(step, index) in steps" :key="step.id" class="flex flex-col items-center gap-4">
               <div 
@@ -218,7 +204,6 @@ onUnmounted(() => {
                 {{ step.name }}
               </span>
             </div>
-            <!-- Connector Lines -->
             <div class="absolute top-7 left-14 right-14 h-[2px] bg-brand-border -z-10">
               <div 
                 class="h-full bg-black transition-all duration-1000"
@@ -228,7 +213,6 @@ onUnmounted(() => {
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
-            <!-- Logs Panel -->
             <div class="bg-neutral-50 rounded-3xl p-8 border border-brand-border font-mono text-xs h-96 overflow-y-auto shadow-inner relative">
               <div class="sticky top-0 bg-neutral-50/90 backdrop-blur pb-4 mb-4 border-b border-black/5 flex items-center gap-2">
                 <Terminal class="w-4 h-4 text-black" />
@@ -244,7 +228,6 @@ onUnmounted(() => {
               </div>
             </div>
 
-            <!-- Result View -->
             <div class="flex flex-col justify-center items-center text-center p-10 border-2 border-dashed border-brand-border rounded-3xl bg-neutral-50/30">
               <div v-if="jobStatus === 'running'" class="space-y-6">
                 <div class="w-24 h-24 bg-white shadow-premium rounded-full flex items-center justify-center mx-auto animate-pulse">

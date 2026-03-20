@@ -9,7 +9,6 @@ from pydantic import BaseModel
 
 T = TypeVar('T', bound=BaseModel)
 
-# Setup Clients (Production-Hardened)
 groq_client = OpenAI(
     base_url="https://api.groq.com/openai/v1",
     api_key=os.environ.get("GROQ_API_KEY")
@@ -25,7 +24,6 @@ def call_structured_llm(model: str, system_prompt: str, user_prompt: str, respon
     """
     client = gemini_client if "gemini" in model.lower() else groq_client
     
-    # Standard prompt to enforce JSON structure
     schema_json = json.dumps(response_model.model_json_schema())
     full_system_prompt = (
         f"{system_prompt}\n\n"
@@ -54,7 +52,7 @@ def run_pydantic_ai_pipeline(topic: str) -> FinalBlog:
     """
     Structured multi-agent pipeline using Pydantic for validation.
     """
-    # 1. Planning Phase
+
     print(f"[AI] Planning: {topic}...")
     plan = call_structured_llm(
         model="llama-3.3-70b-versatile",
@@ -63,7 +61,6 @@ def run_pydantic_ai_pipeline(topic: str) -> FinalBlog:
         response_model=BlogPlan
     )
     
-    # 2. Research Phase
     print(f"[AI] Researching: {plan.suggested_title}...")
     researched_plan = call_structured_llm(
         model="llama-3.3-70b-versatile",
@@ -76,7 +73,6 @@ def run_pydantic_ai_pipeline(topic: str) -> FinalBlog:
         response_model=BlogPlan
     )
     
-    # 3. Writing Phase
     print(f"[AI] Writing: {researched_plan.suggested_title}...")
     final_blog = call_structured_llm(
         model="llama-3.3-70b-versatile",
