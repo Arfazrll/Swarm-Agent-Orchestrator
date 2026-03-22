@@ -20,7 +20,7 @@ A production-grade, multi-agent blog generation engine powered by **Pydantic AI 
 | Layer | Technology |
 |---|---|
 | Frontend | Vue.js 3, Vite 5, Tailwind CSS 3, GSAP 3, TypeScript |
-| Icons | Lucide Vue Next |
+| Icons | Lucide VueNext |
 | Backend | Flask (Python 3.10+), Serverless via Vercel |
 | AI Inference | Groq API — Llama 3.3 70B |
 | Validation | Pydantic v2 |
